@@ -9,6 +9,8 @@ namespace Classlibrary
     public class AVL<T>
     {
         public Node<T> root;
+        public List<T> TreeList;
+        public List<T> SearchTree;
         public int rotations = 0;
         public int height = 0;
         public int NodeCounter { get; set; }
@@ -17,6 +19,8 @@ namespace Classlibrary
         public AVL()
         {
             root = null;
+            TreeList = new List<T>();
+            SearchTree = new List<T>();
         }
 
 
@@ -296,13 +300,61 @@ namespace Classlibrary
             return actual;
         }
 
+        public void Search(Node<T> SearchNode, Delegate delegate1)
+        {
+            SearchTree.Clear();
+            Node<T> aux = ReSearch(root, delegate1, SearchNode);
+            if (aux == null || SearchNode.value == null)
+            {
+                SearchTree.Clear();
+                //ListaCUI.Clear();
+            }
+            else
+            {
+                SearchTree.Add(ReSearch(root, delegate1, SearchNode).value);
+                //ListaCUI.Add(busqueda2(raiz, delegado1, buscado).Valor);
+            }
+        }
+
+        public Node<T> ReSearch(Node<T> aux, Delegate delegate1, Node<T> Search)
+        {
+            Node<T> Output = null;
+            if (aux == null || Search.value == null)
+            {
+                Output = null;
+            }
+            else
+            {
+                if (Convert.ToInt32(delegate1.DynamicInvoke(aux.value, Search.value)) == 0)
+                {
+                    Output = aux;
+                }
+                else
+                {
+                    if (Convert.ToInt32(delegate1.DynamicInvoke(Search.value, aux.value)) < 0)
+                    {
+                        Output = ReSearch(aux.LeftNode, delegate1, Search);
+                    }
+                    else
+                    {
+                        if (Convert.ToInt32(delegate1.DynamicInvoke(Search.value, aux.value)) > 0)
+                        {
+                            Output = ReSearch(aux.RightNode, delegate1, Search);
+                        }
+                    }
+                }
+            }
+            return Output;
+        }
+
+
         public void Recorrido(Node<T> r)
         {
 
             if (r != null)
             {
                 Recorrido(r.LeftNode);
-                //ArbolList.Add(r.value);
+                TreeList.Add(r.value);
                 Recorrido(r.RightNode);
             }
 
@@ -310,7 +362,7 @@ namespace Classlibrary
 
         public void InOrden(Node<T> raiz)
         {
-            //ArbolList.Clear();
+            TreeList.Clear();
             Recorrido(raiz);
         }
         

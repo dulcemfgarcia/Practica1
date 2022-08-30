@@ -1,0 +1,16 @@
+﻿@using Classlibrary
+@model AVL<Practica01.Models.Person>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="black">Filtros de búsqueda</h1>
+
+<form asp-action="BuscarNombre" method="post">
+    <div class="input-group input-group-lg">
+        <input type="type" name="name" value="" />
+        <button class="btn btn-outline-dark black">Buscar nombre</button>
+    </div>
+</form>
+
