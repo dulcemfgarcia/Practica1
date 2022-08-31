@@ -44,7 +44,7 @@ namespace Classlibrary
                         }
                         else
                         {
-                            nuevoPadre = rotacionDobleIzquierda(subArbol);
+                            nuevoPadre = DoubleRL(subArbol);
                         }
                     }
                 }
@@ -66,7 +66,7 @@ namespace Classlibrary
                         }
                         else
                         {
-                            nuevoPadre = rotacionDobleDerecha(subArbol);
+                            nuevoPadre = DoubleRR(subArbol);
                         }
                     }
                 }
@@ -105,13 +105,13 @@ namespace Classlibrary
             {
                 root = InsertAVL(newNode, delegate1, root);
             }
-            InOrden(root);
+            InOrder(root);
         }
 
         public void Delete(T data, Delegate delegate1)
         {
             root = DeleteAVL(root, delegate1, data);
-            InOrden(root);
+            InOrder(root);
         }
 
         private Node<T> DeleteAVL(Node<T> actual, Delegate delegate1, T data)
@@ -244,7 +244,7 @@ namespace Classlibrary
             return num;
         }
 
-        public Node<T> rotacionDobleIzquierda(Node<T> A)
+        public Node<T> DoubleRL(Node<T> A)
         {
             rotations++;
             Node<T> aux;
@@ -254,7 +254,7 @@ namespace Classlibrary
             return aux;
         }
 
-        public Node<T> rotacionDobleDerecha(Node<T> A)
+        public Node<T> DoubleRR(Node<T> A)
         {
             rotations++;
             Node<T> aux;
@@ -307,12 +307,12 @@ namespace Classlibrary
             if (aux == null || SearchNode.value == null)
             {
                 SearchTree.Clear();
-                //ListaCUI.Clear();
+                //SearchTree.Clear();
             }
             else
             {
                 SearchTree.Add(ReSearch(root, delegate1, SearchNode).value);
-                //ListaCUI.Add(busqueda2(raiz, delegado1, buscado).Valor);
+                //SearchTree.Add(ReSearch(root, delegate1, SearchNode).Valor);
             }
         }
 
@@ -347,23 +347,41 @@ namespace Classlibrary
             return Output;
         }
 
+        public void Patch(T value, Node<T> Search, Delegate delegate1, Delegate delegate2)
+        {
+            PatchNode(value, root, delegate1, delegate2, Search);
+            InOrder(root);
+        }
 
-        public void Recorrido(Node<T> r)
+        public void PatchNode(T value, Node<T> aux, Delegate delegate1, Delegate delegate2, Node<T> Search)
+        {
+            if (aux != null)
+            {
+                PatchNode(value, aux.LeftNode, delegate1, delegate2, Search);
+                if (Convert.ToInt32(delegate1.DynamicInvoke(Search.value, aux.value)) == 0)
+                {
+                    aux.value = (T)delegate2.DynamicInvoke(value, aux.value);
+                }
+                PatchNode(value, aux.RightNode, delegate1, delegate2, Search);
+            }
+        }
+
+        public void route(Node<T> r)
         {
 
             if (r != null)
             {
-                Recorrido(r.LeftNode);
+                route(r.LeftNode);
                 TreeList.Add(r.value);
-                Recorrido(r.RightNode);
+                route(r.RightNode);
             }
 
         }
 
-        public void InOrden(Node<T> raiz)
+        public void InOrder(Node<T> root)
         {
             TreeList.Clear();
-            Recorrido(raiz);
+            route(root);
         }
         
     }

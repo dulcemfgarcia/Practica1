@@ -2,10 +2,10 @@
 @model AVL<Practica01.Models.Person>
 
 @{
-    ViewData["Title"] = "BusquedaPlaca";
+    ViewData["Title"] = "Search";
 }
 
-<h1>Resultados de la búsqueda por nombre y dpi</h1>
+<h1>Resultados de la búsqueda por dpi</h1>
 
 
 @if (Model.SearchTree.Count != 0)
@@ -14,16 +14,16 @@
         <thead>
             <tr>
                 <th>
-                    Placa
+                    Name
                 </th>
                 <th>
-                    Color
+                    DPI
                 </th>
                 <th>
-                    Propietario
+                    Datebirth
                 </th>
                 <th>
-                    Coordenadas
+                    Address
                 </th>
                 <th></th>
             </tr>
@@ -52,11 +52,10 @@
 else
 {
     <div style="text-align:center">
-        <label>No se algún registro con este nombre y dpi</label>
+        <label>No hay algún registro con este nombre y dpi</label>
         <br>
     </div>
 }
-</div>
 <div>
     <a asp-action="Index">Regresar al menú</a>
 </div>
