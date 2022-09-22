@@ -303,48 +303,20 @@ namespace Classlibrary
         public void Search(Node<T> SearchNode, Delegate delegate1)
         {
             SearchTree.Clear();
-            Node<T> aux = ReSearch(root, delegate1, SearchNode);
-            if (aux == null || SearchNode.value == null)
-            {
-                SearchTree.Clear();
-                //SearchTree.Clear();
-            }
-            else
-            {
-                SearchTree.Add(ReSearch(root, delegate1, SearchNode).value);
-                //SearchTree.Add(ReSearch(root, delegate1, SearchNode).Valor);
-            }
+            ReSearch(root, delegate1, SearchNode);
         }
 
-        public Node<T> ReSearch(Node<T> aux, Delegate delegate1, Node<T> Search)
+        public void ReSearch(Node<T> aux, Delegate delegate1, Node<T> Search)
         {
-            Node<T> Output = null;
-            if (aux == null || Search.value == null)
+            if (aux != null)
             {
-                Output = null;
-            }
-            else
-            {
-                if (Convert.ToInt32(delegate1.DynamicInvoke(aux.value, Search.value)) == 0)
+                ReSearch(aux.LeftNode, delegate1, Search);
+                if (Convert.ToInt32(delegate1.DynamicInvoke(Search.value, aux.value)) == 0)
                 {
-                    Output = aux;
+                    SearchTree.Add(aux.value);
                 }
-                else
-                {
-                    if (Convert.ToInt32(delegate1.DynamicInvoke(Search.value, aux.value)) < 0)
-                    {
-                        Output = ReSearch(aux.LeftNode, delegate1, Search);
-                    }
-                    else
-                    {
-                        if (Convert.ToInt32(delegate1.DynamicInvoke(Search.value, aux.value)) > 0)
-                        {
-                            Output = ReSearch(aux.RightNode, delegate1, Search);
-                        }
-                    }
-                }
+                ReSearch(aux.RightNode, delegate1, Search);
             }
-            return Output;
         }
 
         public void Patch(T value, Node<T> Search, Delegate delegate1, Delegate delegate2)
@@ -377,7 +349,6 @@ namespace Classlibrary
             }
 
         }
-
         public void InOrder(Node<T> root)
         {
             TreeList.Clear();

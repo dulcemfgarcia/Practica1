@@ -7,10 +7,10 @@
 
 <h4 class="black">Filtros de búsqueda</h4>
 
-<form asp-action="Search" method="post">
+<form asp-action="SearchName" method="post">
     <div class="input-group input-group-lg">
-        <input type="type" name="dpi" value="" />
-        <button class="btn btn-outline-dark black">Buscar DPI</button>
+        <input type="type" name="name" value="" />
+        <button class="btn btn-outline-dark black">Buscar recluta</button>
     </div>
 </form>
 
@@ -38,20 +38,23 @@
         <tbody>
             @foreach (var item in Model.TreeList)
             {
-                <tr>
-                    <td name="name">
-                        @Html.DisplayFor(modelItem => item.name)
-                    </td>
-                    <td name="dpi">
-                        @Html.DisplayFor(modelItem => item.dpi)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.datebirth)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.address)
-                    </td>
-                </tr>
+            <tr>
+                <td name="name">
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td name="dpi">
+                    @Html.DisplayFor(modelItem => item.dpi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.datebirth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.address)
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "Delete", new { Persona = item.dpi, nombre = item.name})
+                </td>
+            </tr>
             }
         </tbody>
     </table>

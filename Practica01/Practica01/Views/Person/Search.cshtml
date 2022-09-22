@@ -31,20 +31,23 @@
         <tbody>
             @foreach (var item in Model.SearchTree)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.dpi)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.datebirth)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.address)
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dpi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.datebirth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.address)
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "Delete", new { Persona = item.dpi, nombre = item.name })
+                </td>
+            </tr>
             }
         </tbody>
     </table>
@@ -52,10 +55,10 @@
 else
 {
     <div style="text-align:center">
-        <label>No hay algún registro con este nombre y dpi</label>
+        <label>No hay algún registro con este nombre</label>
         <br>
     </div>
 }
 <div>
-    <a asp-action="Index">Regresar al menú</a>
+    <a asp-action="Index">Regresar a la lista de reclutas</a>
 </div>
